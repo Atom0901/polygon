@@ -1,5 +1,5 @@
 # Polygon
-=============================
+------------
 Thanks for choosing Polygon class. 
 It has many usefull methods, so here they are.
 FOR ANY QUESTIONS PLEASE WRITE TO [ME](https://vk.com/meyakovenkoj)
@@ -8,11 +8,12 @@ FOR ANY QUESTIONS PLEASE WRITE TO [ME](https://vk.com/meyakovenkoj)
 ------------
 This class can create polygons. 
 THE LAST VERSION IS MADE ACCORDING 3rd PARAGRAPH
+
 1. Develop a polygon class in accordance with the following definition: 
-- State of a class: 
+    - State of a class: 
     A shape is determined by the number of vertices and an array of vertex coordinates on a plane (float). To describe a vertex, it is advisable to use a structure. Memory for an array of vertices is statically allocated, during compilation, and specified by an array of fixed limit size. 
-- Class protocol:
-Defines the possibilities of creating and initializing class instances and the rules for their use (class methods).
+    - Class protocol:
+    Defines the possibilities of creating and initializing class instances and the rules for their use (class methods).
     - a blank constructor for initializing instances and arrays of instances of a class by default; 
     - creating instances of a class with initialization by the value of a single vertex ("point"); 
     - creating instances of a class with initialization by the number of vertices and an array of vertex coordinates; 
