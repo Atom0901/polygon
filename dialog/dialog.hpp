@@ -14,14 +14,15 @@
 
 class dialog
 {
-    public:
-	dialog() {};
-	void hello(const char *);
-	int get_int(const char *, int size);
-	float get_float(const char *, float size);
-	int menu(int N);
-	
+public:
+    dialog() {};
+    void hello(const char *);
+    int get_int(const char *, int size);
+    float get_float(const char *, float size);
+    int menu(int N);
+    
 };
 
 #pragma GCC visibility pop
 #endif
+
