@@ -19,7 +19,7 @@ int main(int argc, const char * argv[]) {
 	
 	my.hello("Hey this is program to test polygons");
 	
-	polygon it;
+	Polygon it;
 	point t;
 	int c, p = 0, u;
 
@@ -42,6 +42,7 @@ int main(int argc, const char * argv[]) {
 				continue;
 		case 2:
 				std::cout << it;
+                it.print(std::cout);
 				continue;
 		case 3:
 				t = it.gravity();

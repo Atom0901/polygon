@@ -23,49 +23,34 @@ struct point{
 template <class NUMBER, class STREAM>
 int get_flow(NUMBER &num, STREAM &flow);
 
-class polygon
+class Polygon
 {
 private:
 	static const int QUOTA = 10;
-	int SZ;
-	point *mas;
-	int size;
+	int SZ;//маскимальный доступный размер массива
+	point *mas;//массив точек
+	int size;//текущее число точек в массиве
 public:
-	polygon() : size(0), SZ(QUOTA), mas(new point[QUOTA]) {};//DONE
-	polygon(point one) : size(1), SZ(QUOTA), mas(new point[QUOTA]){mas[0].x = one.x; mas[0].y = one.y;};//DONE
-	polygon(point *m, int s);//DONE
+	Polygon() : size(0), SZ(QUOTA), mas(new point[QUOTA]) {};//пустой конструктор
+	Polygon(point one) : size(1), SZ(QUOTA), mas(new point[QUOTA]){mas[0].x = one.x; mas[0].y = one.y;};//конструктор из точки
+	Polygon(point *m, int s);//конструктор из массива точек
+	Polygon(const Polygon&);//копирующий конструктор
+	Polygon(Polygon&&);//перемещающий конструктор
 	
-	polygon(const polygon&);//копирующий конструктор, DONE
-	polygon(polygon&&);//перемещающий конструктор, DONE
+	~Polygon(){ delete[] mas; };//деструктор
 	
-	~polygon(){ delete[] mas; };//деструктор, DONE
-	polygon &operator =(const polygon &); //перегруженный оператор присваивания, DONE
-	polygon &operator =(polygon &&);//пермещающий оператор присваивания, DONE
+	Polygon &operator =(const Polygon &); //перегруженный оператор присваивания
+	Polygon &operator =(Polygon &&);
+	Polygon & operator += ( point ne );//оператор добавления точки
 	
-//	polygon & operator +=(const polygon &);// копирование одного многоугольника в другой
-//	polygon & operator ()(polygon &);// перемещение из одного многоугольника в другой
-	
-	//polygon& add_point(point a);//has test
-	polygon & operator += ( point ne );//DONE
-	
-	point operator [] (int a);//DONE
-	//point get_point(int a);//has test
-	
-	point gravity();//has test, DONE
-	
-	polygon& operator () (int alfa, point x);//DONE
-	//polygon& rotate(int angle, point x);//has test
-	
-	polygon& operator () (point x);//DONE
-	//polygon& move(point x);//has test
-	
-	int get_sz(){return SZ;};//DONE
-	friend std::istream & operator >> (std::istream &, polygon &);//DONE
-	friend std::ostream & operator << (std::ostream & s, polygon & r);//DONE
-	
-	//for tests
-	int get_size() {return size;};//DONE
-	int get_quota() {return QUOTA;};//DONE
+	point operator [] (int a);//оператор получения координат точки
+	point gravity();//вычисление центра тяжести
+	Polygon& operator () (int alfa, point x);//оператор поворота многоугольника на угол альфа относительно точки х
+	Polygon& operator () (point x);//оператор перемещения многоугольника на вектор х из начала координат
+	std::ostream & print (std::ostream & s);//вывод многоугольника списком
+	friend std::istream & operator >> (std::istream &, Polygon &);//ввод многоугольника
+	friend std::ostream & operator << (std::ostream & s, Polygon & r);//вывод многоугольника по точкам
+	int check(int i, int l);//проверка принадлежности вершинам
 };
 
 

@@ -10,8 +10,19 @@
 #include <math.h>
 #include "polygon.hpp"
 
-polygon::polygon(point *m, int s): size(s),SZ(s)//test done
-{
+template <class NUMBER, class STREAM>
+int get_flow(NUMBER &num, STREAM &flow){
+	flow >> num;
+	while (!flow.good()){
+		std::cout << "repeat: ";
+		flow.clear();
+		flow.ignore(std::numeric_limits <std::streamsize>::max(), '\n');
+		flow >> num;
+	}
+	return 1;
+}
+
+Polygon::Polygon(point *m, int s): size(s),SZ(s){
 	mas = new point[s];
 	for (int i = 0; i < s; i++){
 		mas[i].x = m[i].x;
@@ -19,8 +30,7 @@ polygon::polygon(point *m, int s): size(s),SZ(s)//test done
 	}
 }
 
-polygon::polygon(const polygon& old): size(old.size), SZ(old.SZ)//test done
-{
+Polygon::Polygon(const Polygon& old): size(old.size), SZ(old.SZ){
 	mas = new point[old.SZ];
 	for (int i = 0; i < old.size; i++){
 		mas[i].x = old.mas[i].x;
@@ -28,12 +38,11 @@ polygon::polygon(const polygon& old): size(old.size), SZ(old.SZ)//test done
 	}
 }
 
-polygon::polygon(polygon&& old): size(old.size), SZ(old.SZ), mas(old.mas)//test done
-{
+Polygon::Polygon(Polygon&& old): size(old.size), SZ(old.SZ), mas(old.mas){
 	old.mas = nullptr;
 }
 
-polygon &polygon::operator =(const polygon &st){//test done
+Polygon &Polygon::operator =(const Polygon &st){
 	if(this != &st){
 		size = st.size;
 		SZ = st.SZ;
@@ -46,7 +55,8 @@ polygon &polygon::operator =(const polygon &st){//test done
 	}
 	return *this;
 }
-polygon &polygon::operator =(polygon &&old){//test done
+
+Polygon &Polygon::operator =(Polygon &&old){
 	int tmp = size;
 	size = old.size;
 	old.size = tmp;
@@ -59,7 +69,7 @@ polygon &polygon::operator =(polygon &&old){//test done
 	return *this;
 }
 
-polygon & polygon::operator += ( point ne ){//test done
+Polygon & Polygon::operator += ( point ne ){
 	if(size >= SZ){
 		SZ += QUOTA;
 		int c = 0;
@@ -76,33 +86,16 @@ polygon & polygon::operator += ( point ne ){//test done
 	size++;
 	return *this;
 }
-/*polygon& polygon::add_point(point a){
-	if(size < SZ){
-		mas[size].x = a.x;
-		mas[size].y = a.y;
-		size++;
-	}else
-		throw std::out_of_range("Max number of points reached");
-	return *this;
-}*/
 
-
-
-point polygon::operator [] (int a){//test done
+point Polygon::operator [] (int a){
 	if (a > -1 && a < size)
 		return mas[a];
 	else
 		throw std::out_of_range("There is no such point");
 }
 
-/*point polygon::get_point(int a){
-	if (a > -1 && a < size)
-		return mas[a];
-	else
-		throw std::out_of_range("There is no such point");
-}*/
 
-point polygon::gravity(){//test done
+point Polygon::gravity(){
 	point res = {0,0};
 	for(int l = 0; l < size; l++){
 		res.x = res.x + mas[l].x;
@@ -114,7 +107,7 @@ point polygon::gravity(){//test done
 }
 
 
-polygon& polygon::operator () (int alfa, point x){//test done
+Polygon& Polygon::operator () (int alfa, point x){
 	if(alfa<0)
 		alfa = -alfa;
 	float PI = 3.14159;
@@ -127,48 +120,15 @@ polygon& polygon::operator () (int alfa, point x){//test done
 	}
 	return *this;
 }
-/*polygon& polygon::rotate(int alfa, point x){
-	if(alfa<0)
-		alfa = -alfa;
-	float PI = 3.14159;
-	int cs = cos(alfa*PI/180);
-	int sn = sin(alfa*PI/180);
-	for(int l = 0; l < size; l++){
-		mas[l] = {mas[l].x - x.x, mas[l].y - x.y};
-		mas[l] = {mas[l].x*cs - mas[l].y*sn, mas[l].x*sn + mas[l].y*cs};
-		mas[l] = {mas[l].x + x.x, mas[l].y + x.y};
-	}
-	return *this;
-}*/
 
-polygon& polygon::operator () (point x){//test done
+Polygon& Polygon::operator () (point x){
 	for(int l = 0; l < size; l++){
 		mas[l] = {mas[l].x + x.x, mas[l].y + x.y};
 	}
 	return *this;
 }
 
-/*polygon& polygon::move(point x){
-	for(int l = 0; l < size; l++){
-		mas[l] = {mas[l].x + x.x, mas[l].y + x.y};
-	}
-	return *this;
-}*/
-
-template <class NUMBER, class STREAM>
-int get_flow(NUMBER &num, STREAM &flow){
-	flow >> num;
-	while (!flow.good())
-	{
-		std::cout << "repeat: ";
-		flow.clear();
-		flow.ignore(std::numeric_limits <std::streamsize>::max(), '\n');
-		flow >> num;
-	}
-	return 1;
-}
-
-std::istream & operator >> (std::istream & s, polygon & r) {
+std::istream & operator >> (std::istream & s, Polygon & r) {
 		get_flow(r.size, s);
 	if (r.size > r.SZ){
 			throw std::out_of_range("Too big");
@@ -183,19 +143,45 @@ std::istream & operator >> (std::istream & s, polygon & r) {
 		return s;
  };
 
+std::ostream & Polygon::print (std::ostream & s) {
+	if (size == 0)
+		s << "There is no polygon"<< std::endl;
+	else
+		for(int l = 0; l < size; l++){
+			s << '(' << l+1 << ')'
+			<< std::setw(10) << mas[l].x
+			<< std::setw(10) << mas[l].y
+			<< std::endl;
+		}
+	return s;
+}
 
+int Polygon::check(int i, int l){
+	for (int y = 0; y < size; y++) {
+		if ((mas[y].x == i)&&(mas[y].y == l))
+			return 1;
+	}
+	return 0;
+}
 
-
-std::ostream & operator << (std::ostream & s, polygon & r) {
-		if (r.size == 0)
-			s << "There is no polygon"<< std::endl;
-		else
-			for(int l = 0; l < r.size; l++){
-				s << '(' << l+1 << ')'
-				<< std::setw(10) << r.mas[l].x
-				<< std::setw(10) << r.mas[l].y
-				<< std::endl;
+std::ostream & operator << (std::ostream & s, Polygon & r) {
+	if (r.size == 0)
+		s << "There is no polygon"<< std::endl;
+	else
+		for(int l = 0; l < 21; l++){
+			s << std::setw(2) << l-1;
+			for (int i = 0; i < 20; i++){
+				if (!l)
+					s << std::setw(2) << i;
+				else{
+					if (r.check(i, l))
+						s << std::setw(2) << "@";
+					else
+						s << std::setw(2) << "  ";
+				}
 			}
-		return s;
- }
+			s << std::endl;
+		}
+	return s;
+}
 
