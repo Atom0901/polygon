@@ -1,6 +1,15 @@
 # Polygon
 ------------
 Thanks for choosing Polygon class. 
+
+The repo has 4 different components. All .xcodeproject files are usefull only on Mac OS with Xcode. 
+
+All sources are in:
+- polygon – main class. Contains polygon.cpp & polygon.hpp. Needs to build. Code made cross-platfom so I think it won't be any problems to build it on Windows.
+- polygon-testing – Google Unit Tests
+- polygon-dialog – a dialog testing programme. Just to see all functionality of class
+- dialog – contains some functions for menu. Needed for polygon-dialog
+
 It has many usefull methods, so here they are.
 FOR ANY QUESTIONS PLEASE WRITE TO [ME](https://vk.com/meyakovenkoj)
 
