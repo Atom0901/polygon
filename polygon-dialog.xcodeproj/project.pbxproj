@@ -242,12 +242,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 35279NZT97;
 				HEADER_SEARCH_PATHS = (
-					"/Users/yakovenko/Documents/Инфа/dialog/dialog",
-					"/Users/yakovenko/Documents/Инфа/polygon/polygon",
+					"/Users/ivanyakovenko/polygon-last-release/dialog",
+					"/Users/ivanyakovenko/polygon-last-release/polygon",
 				);
 				LIBRARY_SEARCH_PATHS = (
-					"/Users/yakovenko/Library/Developer/Xcode/DerivedData/dialog-ftaqiudigdekojawdmyupsyvwvon/Build/Products/Debug",
-					"/Users/yakovenko/Library/Developer/Xcode/DerivedData/polygon-cbbknkywnjbauaaeletdtofobjgl/Build/Products/Debug",
+					"/Users/ivanyakovenko/Library/Developer/Xcode/DerivedData/dialog-fvutffkctkdphyhgiwtgrbdtbzaz/Build/Products/Debug/",
+					"/Users/ivanyakovenko/Library/Developer/Xcode/DerivedData/polygon-bkqdhausslukhgddgyayoidgmtco/Build/Products/Debug/",
 				);
 				OTHER_LDFLAGS = (
 					"-ldialog",
@@ -263,12 +263,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 35279NZT97;
 				HEADER_SEARCH_PATHS = (
-					"/Users/yakovenko/Documents/Инфа/dialog/dialog",
-					"/Users/yakovenko/Documents/Инфа/polygon/polygon",
+					"/Users/ivanyakovenko/polygon-last-release/dialog",
+					"/Users/ivanyakovenko/polygon-last-release/polygon",
 				);
 				LIBRARY_SEARCH_PATHS = (
-					"/Users/yakovenko/Library/Developer/Xcode/DerivedData/dialog-ftaqiudigdekojawdmyupsyvwvon/Build/Products/Debug",
-					"/Users/yakovenko/Library/Developer/Xcode/DerivedData/polygon-cbbknkywnjbauaaeletdtofobjgl/Build/Products/Debug",
+					"/Users/ivanyakovenko/Library/Developer/Xcode/DerivedData/dialog-fvutffkctkdphyhgiwtgrbdtbzaz/Build/Products/Debug/",
+					"/Users/ivanyakovenko/Library/Developer/Xcode/DerivedData/polygon-bkqdhausslukhgddgyayoidgmtco/Build/Products/Debug/",
 				);
 				OTHER_LDFLAGS = (
 					"-ldialog",
