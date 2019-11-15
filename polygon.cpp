@@ -1,187 +1,135 @@
-//
-//  polygon.cpp
-//  polygon
-//
-//  Created by Ivan Yakovenko on 13/10/2018.
-//  Copyright © 2018 Ivan Yakovenko. All rights reserved.
-//
+#include "Polygon.hpp"
+#include "GetFromFlow.hpp"
 
-#include <iostream>
-#include <math.h>
-#include "polygon.hpp"
+using namespace std;
 
-template <class NUMBER, class STREAM>
-int get_flow(NUMBER &num, STREAM &flow){
-	flow >> num;
-	while (!flow.good()){
-		std::cout << "repeat: ";
-		flow.clear();
-		flow.ignore(std::numeric_limits <std::streamsize>::max(), '\n');
-		flow >> num;
-	}
-	return 1;
+Polygon::Polygon(const Point & one){
+	this->points.push_back(one);
 }
 
-Polygon::Polygon(point *m, int s): size(s),SZ(s){
-	mas = new point[s];
-	for (int i = 0; i < s; i++){
-		mas[i].x = m[i].x;
-		mas[i].y = m[i].y;
+Polygon::Polygon(const vector<Point> & dots){
+	for(auto & dot : dots){
+		this->points.push_back(dot);
 	}
 }
 
-Polygon::Polygon(const Polygon& old): size(old.size), SZ(old.SZ){
-	mas = new point[old.SZ];
-	for (int i = 0; i < old.size; i++){
-		mas[i].x = old.mas[i].x;
-		mas[i].y = old.mas[i].y;
+Polygon::Polygon(const Polygon & old){
+	for(auto & dot : old.points){
+		this->points.push_back(dot);
 	}
 }
 
-Polygon::Polygon(Polygon&& old): size(old.size), SZ(old.SZ), mas(old.mas){
-	old.mas = nullptr;
+Polygon::Polygon(Polygon && old){
+	this->points.swap(old.points);
 }
 
-Polygon &Polygon::operator =(const Polygon &st){
-	if(this != &st){
-		size = st.size;
-		SZ = st.SZ;
-		delete [] mas;
-		mas = new point [SZ];
-		for (int i = 0; i < size; ++i){
-			mas[i].x = st.mas[i].x;
-			mas[i].y = st.mas[i].y;
-		}
+Polygon & Polygon::operator = (const Polygon & another){
+	for(auto & dot : another.points){
+		this->points.push_back(dot);
 	}
 	return *this;
 }
 
-Polygon &Polygon::operator =(Polygon &&old){
-	int tmp = size;
-	size = old.size;
-	old.size = tmp;
-	tmp = SZ;
-	SZ = old.SZ;
-	old.SZ = tmp;
-	point *ptr = mas;
-	mas = old.mas;
-	old.mas = ptr;
+Polygon & Polygon::operator = (Polygon && old){
+	this->points.swap(old.points);
 	return *this;
 }
 
-Polygon & Polygon::operator += ( point ne ){
-	if(size >= SZ){
-		SZ += QUOTA;
-		int c = 0;
-		point *another = new point[SZ];
-		while (c < size) {
-			another[c] = mas[c];
-			c++;
-		}
-		mas = another;
-		another = nullptr;
-	}
-	mas[size].x = ne.x;
-	mas[size].y = ne.y;
-	size++;
+Polygon & Polygon::operator += (Point new_point){
+	this->points.push_back(new_point);
 	return *this;
 }
 
-point Polygon::operator [] (int a){
-	if (a > -1 && a < size)
-		return mas[a];
+Point Polygon::operator [] (int a){
+	if (a > -1 && a < this->points.size())
+		return this->points[a];
 	else
-		throw std::out_of_range("There is no such point");
+		throw out_of_range("The index is out of range");
 }
 
-
-point Polygon::gravity(){
-	point res = {0,0};
-	for(int l = 0; l < size; l++){
-		res.x = res.x + mas[l].x;
-		res.y = res.y + mas[l].y;
+float Polygon::area(){
+	float result = 0.0;
+	for(auto i = 0; i < this->points.size(); i++){
+		result += this->points[i].getX() * this->points[i + 1].getY();
+		result -= this->points[i + 1].getX() * this->points[i].getY();
 	}
-	res.x = res.x / size;
-	res.y = res.y / size;
-	return res;
+	return result / 2;
 }
 
+Point Polygon::gravityCenter(){
+	Point gravity;
+	float _x = 0.0, _y = 0.0, semiresult = 0.0;
+	for(auto i = 0; i < this->points.size(); i++){
+		semiresult = this->points[i].getX() * this->points[i + 1].getY();
+		semiresult -= this->points[i + 1].getX() * this->points[i].getY();
+		_x += (this->points[i].getX() + this->points[i + 1].getX())
+			* semiresult;
+		_y += (this->points[i].getY() + this->points[i + 1].getY())
+			* semiresult;
+	}
 
-Polygon& Polygon::operator () (int alfa, point x){
-	if(alfa<0)
-		alfa = -alfa;
-	float PI = 3.14159;
-	int cs = cos(alfa*PI/180);
-	int sn = sin(alfa*PI/180);
-	for(int l = 0; l < size; l++){
-		mas[l] = {mas[l].x - x.x, mas[l].y - x.y};
-		mas[l] = {mas[l].x*cs - mas[l].y*sn, mas[l].x*sn + mas[l].y*cs};
-		mas[l] = {mas[l].x + x.x, mas[l].y + x.y};
+	_x = _x / (6 * this->area());
+	_y = _y / (6 * this->area());
+
+	return Point(_x, _y);
+}
+
+Polygon& Polygon::operator () (int angle, Point shift){
+	if(angle < 0)
+		angle = -angle;
+	float _x = 0.0, _y = 0.0;
+	float cs = cos(angle * M_PI / 180);
+	float sn = sin(angle * M_PI / 180);
+	for(auto l = 0; l < this->points.size(); l++){
+		_x = this->points[l].getX() - shift.getX();
+		_y = this->points[l].getY() - shift.getY();
+		_x = _x * cs - _y * sn;
+		_y = _x * sn + _y * cs;
+		_x = _x + shift.getX();
+		_y = _y - shift.getY();
+		this->points[l].setX(_x);
+		this->points[l].setY(_y);
 	}
 	return *this;
 }
 
-Polygon& Polygon::operator () (point x){
-	for(int l = 0; l < size; l++){
-		mas[l] = {mas[l].x + x.x, mas[l].y + x.y};
+Polygon& Polygon::operator () (Point shift){
+	float _x = 0.0, _y = 0.0;
+	for(int l = 0; l < this->points.size(); l++){
+		_x = this->points[l].getX() + shift.getX();
+		_y = this->points[l].getY() + shift.getY();
+		this->points[l].setX(_x);
+		this->points[l].setY(_y);
 	}
 	return *this;
 }
 
-std::istream & operator >> (std::istream & s, Polygon & r) {
-		get_flow(r.size, s);
-	if (r.size > r.SZ){
-			throw std::out_of_range("Too big");
-		}else
-			for (int k = 0; k < r.size; k++){
-				get_flow(r.mas[k].x, s);
-				get_flow(r.mas[k].y, s);
-			}
-		if(s.good()){
-			s.setstate(std::ios::failbit);
-		}
-		return s;
- };
-
-std::ostream & Polygon::print (std::ostream & s) {
-	if (size == 0)
-		s << "There is no polygon"<< std::endl;
+ostream & Polygon::print (ostream & out) {
+	if (this->points.empty())
+		out << "There is no polygon"<< endl;
 	else
-		for(int l = 0; l < size; l++){
-			s << '(' << l+1 << ')'
-			<< std::setw(10) << mas[l].x
-			<< std::setw(10) << mas[l].y
-			<< std::endl;
+		for(int l = 0; l < this->points.size(); l++){
+			out << '(' << l+1 << ')'
+			<< setw(10) << this->points[l].getX()
+			<< setw(10) << this->points[l].getY()
+			<< endl;
 		}
-	return s;
+	return out;
 }
 
-int Polygon::check(int i, int l){
-	for (int y = 0; y < size; y++) {
-		if ((mas[y].x == i)&&(mas[y].y == l))
-			return 1;
+istream & operator >> (istream & in, Polygon & object) {
+	int size;
+	getFromFlow(size, in);
+	float _x, _y;
+	for(auto k = 0; k < size; k++){
+		getFromFlow(_x, in);
+		getFromFlow(_y, in);
+		object += Point(_x, _y);
 	}
-	return 0;
+	return in;
 }
 
-std::ostream & operator << (std::ostream & s, Polygon & r) {
-	if (r.size == 0)
-		s << "There is no polygon"<< std::endl;
-	else
-		for(int l = 0; l < 21; l++){
-			s << std::setw(2) << l-1;
-			for (int i = 0; i < 20; i++){
-				if (!l)
-					s << std::setw(2) << i;
-				else{
-					if (r.check(i, l))
-						s << std::setw(2) << "@";
-					else
-						s << std::setw(2) << "  ";
-				}
-			}
-			s << std::endl;
-		}
-	return s;
+ostream & operator << (ostream & out, Polygon & object) {
+	object.print(out);
+	return out;
 }
-
