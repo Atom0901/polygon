@@ -31,7 +31,7 @@ Makefile has different options:
 ## Meta
 
 Created for C++ course in MEPhI
-Yakovenko Ivan [VK](https://vk.com/meyakovenkoj) | [Email](sendto:ivan.yakovenko@icloud.com)
+Yakovenko Ivan [VK](https://vk.com/meyakovenkoj) | ivan.yakovenko@icloud.com
 
 ## Contributing
 
