@@ -28,6 +28,17 @@ Makefile has different options:
     * builds check directory with tests
     * NOT WORKING YET
 
+## Notes
+
+Project builds for C++11 with flags -Werror -Wpedantic -Wall
+Remember about it when you will try to make the pull request :)
+
+## Known issues
+
+- test doesn't run
+- strange behavior with rotate operation
+- stream doesn't clean up during dialog work
+
 ## Meta
 
 Created for C++ course in MEPhI
