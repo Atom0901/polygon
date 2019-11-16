@@ -7,6 +7,10 @@ public:
 	}
 	Point(const Point & old) : x(old.getX()), y(old.getY()){}
 	Point(Point && old) : x(old.x), y(old.y){}
+	Point &Point::operator=(const Point & old){
+		this->setX(old.getX());
+		this->setY(old.getY());
+	}
 	void setX(float _x){x = _x;}
 	void setY(float _y){y = _y;}
 	float getX() const {return x;}
