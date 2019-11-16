@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 #include <vector>
-#include "gtest/gtest.h"
+#include "include/gtest/gtest.h"
 #include "../polygon.hpp"
 
 TEST(PolygonEmptyConstructor,DefaultConstructor)
