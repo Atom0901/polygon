@@ -18,77 +18,25 @@ int main(int argc, const char * argv[]) {
 	while(run){
 		switch(items.menu()){
 		case MAKE:
-			while(true){
-				try{
-					cout << "Enter number of apexes: ";
-					cin >> shape;
-					break;
-				}
-				catch (const exception &msg)
-				{
-					cout << msg.what() << endl;
-				}
-			}
+			items.MakeItem(shape);
 			continue;
 		case PRINT:
-			cout << "First way" << endl;
-			cout << shape;
-			cout << "Second way" << endl;
-			shape.print(cout);
+			items.PrintItem(shape);
 			continue;
 		case GRAVITY:
-			Point gravity_center;
-			gravity_center = shape.gravityCenter();
-			cout << "Gravity center is :" 
-			<< setw(10) << gravity_center.getX()
-			<< setw(10) << gravity_center.getY() << endl;
+			items.GravityItem(shape);
 			continue;
 		case GET:
-			cout << "Enter index: ";
-			int index;
-			Point dot;
-			getFromFlow(index, cin);
-			try{
-				dot = shape[index];
-			}
-			catch (const exception &msg)
-			{
-				cout << msg.what() << endl;
-				continue;
-			}
-			cout << '(' << index << ')' 
-			<< setw(10) << dot.getX()
-			<< setw(10) << dot.getY() << endl;
+			items.GetPointItem(shape);
 			continue;
 		case ROTATE:
-			cout << "Enter x: ";
-			float x, y;
-			int angle;
-			getFromFlow(x, cin);
-			cout << "Enter y: ";
-			getFromFlow(y, cin);
-			cout << "Enter angle: ";
-			getFromFlow(angle, cin);
-			shape(angle, Point(x, y));
-			cout << shape;
+			items.RotateItem(shape);
 			continue;
 		case MOVE:
-			int x, y;
-			cout << "Enter x: ";
-			getFromFlow(x, cin);
-			cout << "Enter y: ";
-			getFromFlow(y, cin);
-			shape(Point(x, y));
-			cout << shape;
+			items.MoveItem(shape);
 			continue;
 		case ADD:
-			int x, y;
-			cout << "Enter x: ";
-			getFromFlow(x, cin);
-			cout << "Enter y: ";
-			getFromFlow(y, cin);
-			shape += Point(x, y);
-			cout << shape;
+			items.AddPointItem(shape);
 			continue;
 		default:
 			cout << "Thanks" << endl;
