@@ -2,6 +2,8 @@
 #include "dialog.hpp"
 #include "polygon.hpp"
 
+using namespace std;
+
 int main(int argc, const char * argv[]) {
 	Dialog items;
 	
@@ -18,69 +20,69 @@ int main(int argc, const char * argv[]) {
 				do{
 					c = 0;
 					try{
-						std::cout << "enter number: ";
-						std::cin >> it;
+						cout << "enter number: ";
+						cin >> it;
 					}
-					catch (const std::exception &msg)
+					catch (const exception &msg)
 					{
-						std::cout << msg.what() << std::endl;
+						cout << msg.what() << endl;
 						c = 1;
 					}
 				}while(c);
 				continue;
 		case 2:
-				std::cout << it;
-                it.print(std::cout);
+				cout << it;
+                it.print(cout);
 				continue;
 		case 3:
 				t = it.gravity();
-				std::cout << "gravity center is :" << std::setw(10) << t.x
-				<< std::setw(10) << t.y
-				<< std::endl;
+				cout << "gravity center is :" << setw(10) << t.x
+				<< setw(10) << t.y
+				<< endl;
 				continue;
 		case 4:
-				std::cout << "enter number: ";
-				get_flow(u, std::cin);
+				cout << "enter number: ";
+				get_flow(u, cin);
 				try{
 					t = it[u];
 				}
-				catch (const std::exception &msg)
+				catch (const exception &msg)
 				{
-					std::cout << msg.what() << std::endl;
+					cout << msg.what() << endl;
 					continue;
 				}
-				std::cout << '(' << u << ')' << std::setw(10) << t.x
-				<< std::setw(10) << t.y
-				<< std::endl;
+				cout << '(' << u << ')' << setw(10) << t.x
+				<< setw(10) << t.y
+				<< endl;
 				continue;
 		case 5:
-				std::cout << "enter x: ";
-				get_flow(t.x, std::cin);
-				std::cout << "enter y: ";
-				get_flow(t.y, std::cin);
-				std::cout << "enter angle: ";
-				get_flow(u, std::cin);
+				cout << "enter x: ";
+				get_flow(t.x, cin);
+				cout << "enter y: ";
+				get_flow(t.y, cin);
+				cout << "enter angle: ";
+				get_flow(u, cin);
 				it(u, t);
-				std::cout << it;
+				cout << it;
 				continue;
 		case 6:
-				std::cout << "enter x: ";
-				get_flow(t.x, std::cin);
-				std::cout << "enter y: ";
-				get_flow(t.y, std::cin);
+				cout << "enter x: ";
+				get_flow(t.x, cin);
+				cout << "enter y: ";
+				get_flow(t.y, cin);
 				it(t);
-				std::cout << it;
+				cout << it;
 				continue;
 		case 7:
-				std::cout << "enter x: ";
-				get_flow(t.x, std::cin);
-				std::cout << "enter y: ";
-				get_flow(t.y, std::cin);
+				cout << "enter x: ";
+				get_flow(t.x, cin);
+				cout << "enter y: ";
+				get_flow(t.y, cin);
 				it += t;
-				std::cout << it;
+				cout << it;
 				continue;
 		default:
-				std::cout << "thanks" << std::endl;
+				cout << "thanks" << endl;
 				break;
 		}
 	}while(p);
