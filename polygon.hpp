@@ -25,6 +25,7 @@ public:
 	
 	Point operator [] (int index);
 	Point gravityCenter();
+	int getAmount();
 	float area();
 	Polygon& operator () (int angle, Point shift);
 	Polygon& operator () (Point shift);

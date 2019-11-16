@@ -74,6 +74,10 @@ Point Polygon::gravityCenter(){
 	return Point(_x, _y);
 }
 
+int Polygon::getAmount(){
+	return points.size();
+}
+
 Polygon& Polygon::operator () (int angle, Point shift){
 	if(angle < 0)
 		angle = -angle;
