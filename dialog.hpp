@@ -1,28 +1,10 @@
-//
-//  dialog.hpp
-//  dialog
-//
-//  Created by Ivan Yakovenko on 15/10/2018.
-//  Copyright © 2018 Ivan Yakovenko. All rights reserved.
-//
+#pragma once
+#include <string>
 
-#ifndef dialog_
-#define dialog_
-
-
-#pragma GCC visibility push(default)
-
-class dialog
+class Dialog
 {
 public:
-    dialog() {};
-    void hello(const char *);
-    int get_int(const char *, int size);
-    float get_float(const char *, float size);
-    int menu(int N);
-    
+    Dialog() {};
+    void print_line(const string & line);
+    int menu();
 };
-
-#pragma GCC visibility pop
-#endif
-

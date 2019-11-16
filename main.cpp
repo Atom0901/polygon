@@ -1,31 +1,19 @@
-//
-//  main.cpp
-//  polygon-dialog
-//
-//  Created by Ivan Yakovenko on 15/10/2018.
-//  Copyright © 2018 Ivan Yakovenko. All rights reserved.
-//
-
 #include <iostream>
 #include "dialog.hpp"
 #include "polygon.hpp"
 
-//const char *message[]={"0. exit","1. make polygon", "2. print polygon", "3. find gravity point", "4. get point by number", "5. rotate around point", "6. move polygon"};
-
 int main(int argc, const char * argv[]) {
-	dialog my;
+	Dialog items;
 	
-	//int c;
-	
-	my.hello("Hey this is program to test polygons");
+	items.print_line("Hey this is program to test polygons");
 	
 	Polygon it;
-	point t;
+	Point t;
 	int c, p = 0, u;
 
 	
 	do{
-		switch((p = my.menu(7))){
+		switch(items.menu()){
 		case 1:
 				do{
 					c = 0;
