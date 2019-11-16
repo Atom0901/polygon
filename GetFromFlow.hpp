@@ -1,3 +1,5 @@
+#pragma once
+
 template <class Number, class Stream>
 int getFromFlow(Number &num, Stream &flow){
 	flow >> num;

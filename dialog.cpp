@@ -1,5 +1,5 @@
 #include <iostream>
-#include "dialog.hpp"
+#include "Dialog.hpp"
 #include "GetFromFlow.hpp"
 
 using namespace std;

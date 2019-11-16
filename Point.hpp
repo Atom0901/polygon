@@ -1,3 +1,5 @@
+#pragma once
+
 class Point{
 private:
 	float x, y;
@@ -7,9 +9,10 @@ public:
 	}
 	Point(const Point & old) : x(old.getX()), y(old.getY()){}
 	Point(Point && old) : x(old.x), y(old.y){}
-	Point &Point::operator=(const Point & old){
+	Point & operator=(const Point & old){
 		this->setX(old.getX());
 		this->setY(old.getY());
+		return *this;
 	}
 	void setX(float _x){x = _x;}
 	void setY(float _y){y = _y;}

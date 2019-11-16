@@ -1,6 +1,6 @@
 #include <iostream>
-#include "dialog.hpp"
-#include "polygon.hpp"
+#include "Dialog.hpp"
+#include "Polygon.hpp"
 #include "GetFromFlow.hpp"
 
 using namespace std;

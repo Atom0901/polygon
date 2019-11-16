@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-#include "polygon.hpp"
+#include "Polygon.hpp"
 #include <iostream>
 
 class Dialog
