@@ -13,7 +13,7 @@ EXECUTABLE=polygon
 all: $(SOURCES) $(EXECUTABLE)
 	
 $(EXECUTABLE): $(OBJECTS) 
-	$(CC) $(CFLAGS) $(OBJECTS) -o $@
+	$(CC) $(OBJECTS) -o $@
 
 .cpp.o:
 	$(CC) $(CFLAGS) $< -o $@

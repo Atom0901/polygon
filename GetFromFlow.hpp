@@ -1,7 +1,8 @@
 #pragma once
+#include <iostream>
 
-template <class Number, class Stream>
-int getFromFlow(Number &num, Stream &flow){
+template <class Number>
+int getFromFlow(Number &num, istream &flow){
 	flow >> num;
 	while (!flow.good()){
 		std::cout << "Error. Repeat: ";

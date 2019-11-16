@@ -23,7 +23,7 @@ int Dialog::menu(){
     cout << "Make your choice: --> ";
     while (ReturnCode > 7 || ReturnCode < 0)
     {
-        getFromFlow(cin, ReturnCode);
+        getFromFlow(ReturnCode, cin);
     }
     
     return ReturnCode;
